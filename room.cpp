@@ -21,7 +21,6 @@ void drawFloor()
 
 void drawCeiling()
 {
-
     glColor3f(0.95f, 0.95f, 0.95f);
 
     glBegin(GL_QUADS);
@@ -47,7 +46,6 @@ void drawWalls()
 
     glEnd();
 
-
     glBegin(GL_QUADS);
 
     glVertex3f(-8.0f, 0.0f, -8.0f);
@@ -56,7 +54,6 @@ void drawWalls()
     glVertex3f(-8.0f, 7.0f, -8.0f);
 
     glEnd();
-
 
     glBegin(GL_QUADS);
 
@@ -68,6 +65,59 @@ void drawWalls()
     glEnd();
 }
 
+void drawSky()
+{
+    glColor3f(0.4f, 0.75f, 1.0f);
+
+    glBegin(GL_QUADS);
+
+    glVertex3f(-5.0f, 0.0f, -12.0f);
+    glVertex3f( 5.0f, 0.0f, -12.0f);
+    glVertex3f( 5.0f, 8.0f, -12.0f);
+    glVertex3f(-5.0f, 8.0f, -12.0f);
+
+    glEnd();
+}
+
+void drawWindow()
+{
+    glColor3f(0.6f, 0.85f, 1.0f);
+
+    glBegin(GL_QUADS);
+
+    glVertex3f(-2.0f, 2.0f, -7.95f);
+    glVertex3f( 2.0f, 2.0f, -7.95f);
+    glVertex3f( 2.0f, 5.0f, -7.95f);
+    glVertex3f(-2.0f, 5.0f, -7.95f);
+
+    glEnd();
+
+    glColor3f(0.45f, 0.22f, 0.05f);
+
+    glLineWidth(4);
+
+    glBegin(GL_LINES);
+
+    glVertex3f(-2.0f, 2.0f, -7.9f);
+    glVertex3f( 2.0f, 2.0f, -7.9f);
+
+    glVertex3f( 2.0f, 2.0f, -7.9f);
+    glVertex3f( 2.0f, 5.0f, -7.9f);
+
+    glVertex3f( 2.0f, 5.0f, -7.9f);
+    glVertex3f(-2.0f, 5.0f, -7.9f);
+
+    glVertex3f(-2.0f, 5.0f, -7.9f);
+    glVertex3f(-2.0f, 2.0f, -7.9f);
+
+    glVertex3f(0.0f, 2.0f, -7.9f);
+    glVertex3f(0.0f, 5.0f, -7.9f);
+
+    glVertex3f(-2.0f, 3.5f, -7.9f);
+    glVertex3f( 2.0f, 3.5f, -7.9f);
+
+    glEnd();
+}
 
 void display()
 {
@@ -81,27 +131,28 @@ void display()
         0.0f, 1.0f, 0.0f
     );
 
+    drawSky();
     drawFloor();
     drawCeiling();
     drawWalls();
+    drawWindow();
 
     glutSwapBuffers();
 }
-
 
 void reshape(int w, int h)
 {
     if(h == 0)
         h = 1;
 
-    glViewport(0, 0, w, h);
+    glViewport(0,0,w,h);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
     gluPerspective(
         60.0,
-        (float)w / (float)h,
+        (float)w/(float)h,
         1.0,
         100.0
     );
@@ -111,14 +162,13 @@ void reshape(int w, int h)
 
 void init()
 {
-    glClearColor(0.75f, 0.85f, 1.0f, 1.0f);
-
+    glClearColor(0.75f,0.85f,1.0f,1.0f);
     glEnable(GL_DEPTH_TEST);
 }
 
-int main(int argc, char** argv)
+int main(int argc,char** argv)
 {
-    glutInit(&argc, argv);
+    glutInit(&argc,argv);
 
     glutInitDisplayMode(
         GLUT_DOUBLE |
@@ -126,10 +176,9 @@ int main(int argc, char** argv)
         GLUT_DEPTH
     );
 
-    glutInitWindowSize(1000, 700);
-    glutInitWindowPosition(100, 50);
+    glutInitWindowSize(1000,700);
 
-    glutCreateWindow("3D Study Room - Step 1");
+    glutCreateWindow("3D Study Room - Step 2");
 
     init();
 
@@ -140,4 +189,3 @@ int main(int argc, char** argv)
 
     return 0;
 }
-
