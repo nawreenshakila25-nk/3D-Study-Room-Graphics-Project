@@ -6,7 +6,6 @@ void displayAnimation();
 void update(int value);
 void keyboard(unsigned char key, int x, int y);
 
-
 void display()
 {
 
@@ -18,7 +17,6 @@ void display()
 
     glutSwapBuffers();
 }
-
 
 int main(int argc, char** argv)
 {
