@@ -10,6 +10,10 @@ bool doorOpen = false;
 bool projLightOn = true;
 bool lampOn = true;
 
+
+bool curtainOpen = true;
+bool windowOpen = false;
+
 extern float cameraX, cameraY, cameraZ;
 extern float roomRotX, roomRotY, roomRotZ;
 
@@ -24,7 +28,11 @@ void keyboard(unsigned char key, int x, int y)
         case 'p': case 'P': pcOn = !pcOn; break;
         case 'f': case 'F': fanOn = !fanOn; break;
         case 'a': case 'A': acOn = !acOn; break;
+
+
         case 'o': case 'O': doorOpen = !doorOpen; break;
+        case 'u': case 'U': curtainOpen = !curtainOpen; break;
+        case 'w': case 'W': windowOpen = !windowOpen; break;
 
 
         case 'c': cameraX++; break;
