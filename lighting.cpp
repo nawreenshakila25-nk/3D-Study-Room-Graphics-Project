@@ -1,8 +1,9 @@
 #include <GL/glut.h>
 
-bool lightOn = true;
 
-/* Toggle Light */
+extern bool lightOn;
+
+
 void toggleLight()
 {
     lightOn = !lightOn;
