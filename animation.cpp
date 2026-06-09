@@ -28,21 +28,39 @@ void drawFan() {
     glPopMatrix();
 }
 
-void drawClock() {
+void drawClock()
+{
     glPushMatrix();
+    glTranslatef(7.9f, 5.0f, 0.0f);
+    glRotatef(-90.0f, 0, 1, 0);
 
-    glTranslatef(7.9f, 5.0f, 0.2f); glRotatef(-90.0f, 0, 1, 0);
-    glEnable(GL_TEXTURE_2D); glBindTexture(GL_TEXTURE_2D, clockTex); glColor3f(1.0f, 1.0f, 1.0f);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, clockTex);
+    glColor3f(1.0f, 1.0f, 1.0f);
+
     float r = 0.8f;
-    glBegin(GL_POLYGON); glNormal3f(0, 0, 1);
+    glBegin(GL_POLYGON);
+    glNormal3f(0, 0, 1);
     for(int i = 0; i < 360; i += 5) {
         float rad = i * 3.14159265f / 180.0f;
-        glTexCoord2f(0.5f + 0.5f * cos(rad), 0.5f + 0.5f * sin(rad)); glVertex3f(r * cos(rad), r * sin(rad), 0.0f);
+        glTexCoord2f(0.5f + 0.5f * cos(rad), 0.5f + 0.5f * sin(rad));
+        glVertex3f(r * cos(rad), r * sin(rad), 0.0f);
     }
-    glEnd(); glDisable(GL_TEXTURE_2D);
-    glTranslatef(0.0f, 0.0f, 0.02f); glRotatef(-clockAngle, 0, 0, 1);
-    glColor3f(1.0f, 0.0f, 0.0f); glLineWidth(4.0f);
-    glBegin(GL_LINES); glVertex2f(0.0f, 0.0f); glVertex2f(0.0f, 0.65f); glEnd(); glLineWidth(1.0f);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+
+    
+    glTranslatef(0.0f, 0.0f, 0.02f);
+    glRotatef(-clockAngle, 0, 0, 1);
+
+    glColor3f(1.0f, 0.0f, 0.0f);
+    glLineWidth(4.0f);
+    glBegin(GL_LINES);
+    glVertex2f(0.0f, 0.0f);
+    glVertex2f(0.0f, 0.65f);
+    glEnd();
+    glLineWidth(1.0f);
+
     glPopMatrix();
 }
 
