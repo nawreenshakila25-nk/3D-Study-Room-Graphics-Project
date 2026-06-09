@@ -6,6 +6,9 @@
 
 extern float acFanAngle;
 extern float mistOffset;
+extern float curtainOffset;
+extern float windowOffset;
+extern GLuint keyboardTex, mouseTex, curtainTex;
 
 void solidCube(float size) {
     float s = size / 2.0f;
@@ -171,115 +174,40 @@ void drawSpotlightFixtures() {
     glPushMatrix(); glTranslatef(-4.5f, 6.95f, 1.75f); glScalef(0.2f, 0.05f, 7.5f); solidCube(1.0f); glPopMatrix();
 }
 
-
 void drawAC() {
-    glPushMatrix();
-    glTranslatef(7.8f, 5.5f, -4.0f);
-    glRotatef(-90.0f, 0, 1, 0);
-
-
-    glColor3f(0.85f, 0.85f, 0.85f);
-    glPushMatrix(); glScalef(2.0f, 0.6f, 0.4f); solidCube(1.0f); glPopMatrix();
-
-
-    glColor3f(0.2f, 0.2f, 0.2f);
-    glPushMatrix(); glTranslatef(0.0f, -0.2f, 0.21f); glScalef(1.8f, 0.1f, 0.05f); solidCube(1.0f); glPopMatrix();
-
+    glPushMatrix(); glTranslatef(7.8f, 5.5f, -4.0f); glRotatef(-90.0f, 0, 1, 0);
+    glColor3f(0.85f, 0.85f, 0.85f); glPushMatrix(); glScalef(2.0f, 0.6f, 0.4f); solidCube(1.0f); glPopMatrix();
+    glColor3f(0.2f, 0.2f, 0.2f); glPushMatrix(); glTranslatef(0.0f, -0.2f, 0.21f); glScalef(1.8f, 0.1f, 0.05f); solidCube(1.0f); glPopMatrix();
     if(acOn) {
-
-        glColor3f(0.0f, 1.0f, 0.0f);
-        GLfloat ledGlow[] = {0.0f, 1.0f, 0.0f, 1.0f};
-        glMaterialfv(GL_FRONT, GL_EMISSION, ledGlow);
+        glColor3f(0.0f, 1.0f, 0.0f); GLfloat ledGlow[] = {0.0f, 1.0f, 0.0f, 1.0f}; glMaterialfv(GL_FRONT, GL_EMISSION, ledGlow);
         glPushMatrix(); glTranslatef(0.8f, -0.1f, 0.21f); glScalef(0.05f, 0.05f, 0.05f); solidCube(1.0f); glPopMatrix();
-
-
-        glColor3f(0.0f, 0.8f, 1.0f);
-        GLfloat tempGlow[] = {0.0f, 0.8f, 1.0f, 1.0f};
-        glMaterialfv(GL_FRONT, GL_EMISSION, tempGlow);
-
-        glPushMatrix();
-        glTranslatef(0.4f, -0.1f, 0.22f);
-        glScalef(0.0015f, 0.0015f, 1.0f);
-        glLineWidth(2.0f);
-        glutStrokeCharacter(GLUT_STROKE_ROMAN, '2');
-        glutStrokeCharacter(GLUT_STROKE_ROMAN, '2');
-        glLineWidth(1.0f);
-        glPopMatrix();
-
-
-        GLfloat mistGlow[] = {0.8f, 0.9f, 1.0f, 1.0f};
-        glMaterialfv(GL_FRONT, GL_EMISSION, mistGlow);
-
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glDepthMask(GL_FALSE);
-
+        glColor3f(0.0f, 0.8f, 1.0f); GLfloat tempGlow[] = {0.0f, 0.8f, 1.0f, 1.0f}; glMaterialfv(GL_FRONT, GL_EMISSION, tempGlow);
+        glPushMatrix(); glTranslatef(0.4f, -0.1f, 0.22f); glScalef(0.0015f, 0.0015f, 1.0f); glLineWidth(2.0f); glutStrokeCharacter(GLUT_STROKE_ROMAN, '2'); glutStrokeCharacter(GLUT_STROKE_ROMAN, '2'); glLineWidth(1.0f); glPopMatrix();
+        GLfloat mistGlow[] = {0.8f, 0.9f, 1.0f, 1.0f}; glMaterialfv(GL_FRONT, GL_EMISSION, mistGlow);
+        glEnable(GL_BLEND); glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); glDepthMask(GL_FALSE);
         for(int i = 0; i < 3; i++) {
-            float currentOffset = mistOffset + (i * 0.33f);
-            if (currentOffset > 1.0f) currentOffset -= 1.0f;
-
-            float alpha = (1.0f - currentOffset) * 0.4f;
-            glColor4f(0.8f, 0.9f, 1.0f, alpha);
-
-            glPushMatrix();
-            glTranslatef(0.0f, -0.3f - (currentOffset * 0.8f), 0.2f + (currentOffset * 0.3f));
-            glScalef(1.5f, 0.05f, 0.2f);
-            solidCube(1.0f);
-            glPopMatrix();
+            float currentOffset = mistOffset + (i * 0.33f); if (currentOffset > 1.0f) currentOffset -= 1.0f;
+            float alpha = (1.0f - currentOffset) * 0.4f; glColor4f(0.8f, 0.9f, 1.0f, alpha);
+            glPushMatrix(); glTranslatef(0.0f, -0.3f - (currentOffset * 0.8f), 0.2f + (currentOffset * 0.3f)); glScalef(1.5f, 0.05f, 0.2f); solidCube(1.0f); glPopMatrix();
         }
-        glDepthMask(GL_TRUE);
-        glDisable(GL_BLEND);
-
+        glDepthMask(GL_TRUE); glDisable(GL_BLEND);
     } else {
-        glColor3f(0.1f, 0.1f, 0.1f);
-        glPushMatrix(); glTranslatef(0.8f, -0.1f, 0.21f); glScalef(0.05f, 0.05f, 0.05f); solidCube(1.0f); glPopMatrix();
+        glColor3f(0.1f, 0.1f, 0.1f); glPushMatrix(); glTranslatef(0.8f, -0.1f, 0.21f); glScalef(0.05f, 0.05f, 0.05f); solidCube(1.0f); glPopMatrix();
     }
-
-    GLfloat noGlow[] = {0.0f, 0.0f, 0.0f, 1.0f};
-    glMaterialfv(GL_FRONT, GL_EMISSION, noGlow);
-
-    glPopMatrix();
+    GLfloat noGlow[] = {0.0f, 0.0f, 0.0f, 1.0f}; glMaterialfv(GL_FRONT, GL_EMISSION, noGlow); glPopMatrix();
 }
 
-
 void drawOutdoorAC() {
-    glPushMatrix();
-    glTranslatef(8.6f, 1.0f, -4.0f);
-
-
-    glColor3f(0.85f, 0.85f, 0.8f);
-    glPushMatrix(); glScalef(0.6f, 1.2f, 1.4f); solidCube(1.0f); glPopMatrix();
-
-
-    glColor3f(0.1f, 0.1f, 0.1f);
-    glPushMatrix();
-    glTranslatef(0.31f, 0.0f, 0.0f);
-    glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
-    GLUquadric *quad = gluNewQuadric();
-    gluDisk(quad, 0, 0.45, 32, 1);
-    glPopMatrix();
-
-
-    glPushMatrix();
-    glTranslatef(0.32f, 0.0f, 0.0f);
-    glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
-    glRotatef(acFanAngle, 0.0f, 0.0f, 1.0f);
+    glPushMatrix(); glTranslatef(8.6f, 1.0f, -4.0f);
+    glColor3f(0.85f, 0.85f, 0.8f); glPushMatrix(); glScalef(0.6f, 1.2f, 1.4f); solidCube(1.0f); glPopMatrix();
+    glColor3f(0.1f, 0.1f, 0.1f); glPushMatrix(); glTranslatef(0.31f, 0.0f, 0.0f); glRotatef(90.0f, 0.0f, 1.0f, 0.0f); GLUquadric *quad = gluNewQuadric(); gluDisk(quad, 0, 0.45, 32, 1); glPopMatrix();
+    glPushMatrix(); glTranslatef(0.32f, 0.0f, 0.0f); glRotatef(90.0f, 0.0f, 1.0f, 0.0f); glRotatef(acFanAngle, 0.0f, 0.0f, 1.0f);
     glColor3f(0.3f, 0.3f, 0.3f);
-    for(int i = 0; i < 3; i++) {
-        glPushMatrix();
-        glRotatef(i * 120.0f, 0.0f, 0.0f, 1.0f);
-        glTranslatef(0.0f, 0.2f, 0.0f);
-        glScalef(0.08f, 0.4f, 0.02f);
-        solidCube(1.0f);
-        glPopMatrix();
-    }
+    for(int i = 0; i < 3; i++) { glPushMatrix(); glRotatef(i * 120.0f, 0.0f, 0.0f, 1.0f); glTranslatef(0.0f, 0.2f, 0.0f); glScalef(0.08f, 0.4f, 0.02f); solidCube(1.0f); glPopMatrix(); }
     glPopMatrix();
-
-
     glColor3f(0.3f, 0.3f, 0.3f);
     glPushMatrix(); glTranslatef(-0.2f, -0.6f,  0.4f); glScalef(0.4f, 0.1f, 0.1f); solidCube(1.0f); glPopMatrix();
     glPushMatrix(); glTranslatef(-0.2f, -0.6f, -0.4f); glScalef(0.4f, 0.1f, 0.1f); solidCube(1.0f); glPopMatrix();
-
     glPopMatrix();
 }
 
@@ -333,6 +261,82 @@ void drawDoor() {
     glPopMatrix();
 }
 
+void drawWindowAndCurtains() {
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glDepthMask(GL_FALSE);
+
+
+    glPushMatrix();
+    glTranslatef(-2.0f, 3.5f, -7.9f);
+    glRotatef(windowOffset * 90.0f, 0.0f, 1.0f, 0.0f);
+    glTranslatef(1.0f, 0.0f, 0.0f);
+    glColor4f(0.5f, 0.8f, 0.9f, 0.4f);
+    glPushMatrix(); glScalef(2.0f, 3.0f, 0.05f); solidCube(1.0f); glPopMatrix();
+
+    glEnable(GL_TEXTURE_2D); glBindTexture(GL_TEXTURE_2D, woodTex); glColor3f(1.0f, 1.0f, 1.0f);
+    glPushMatrix(); glTranslatef(0.0f, 1.45f, 0.0f); glScalef(2.0f, 0.1f, 0.06f); solidCube(1.0f); glPopMatrix();
+    glPushMatrix(); glTranslatef(0.0f, -1.45f, 0.0f); glScalef(2.0f, 0.1f, 0.06f); solidCube(1.0f); glPopMatrix();
+    glPushMatrix(); glTranslatef(-0.95f, 0.0f, 0.0f); glScalef(0.1f, 3.0f, 0.06f); solidCube(1.0f); glPopMatrix();
+    glPushMatrix(); glTranslatef(0.95f, 0.0f, 0.0f); glScalef(0.1f, 3.0f, 0.06f); solidCube(1.0f); glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glTranslatef(2.0f, 3.5f, -7.9f);
+    glRotatef(-windowOffset * 90.0f, 0.0f, 1.0f, 0.0f);
+    glTranslatef(-1.0f, 0.0f, 0.0f);
+    glColor4f(0.5f, 0.8f, 0.9f, 0.4f);
+    glPushMatrix(); glScalef(2.0f, 3.0f, 0.05f); solidCube(1.0f); glPopMatrix();
+
+    glEnable(GL_TEXTURE_2D); glBindTexture(GL_TEXTURE_2D, woodTex); glColor3f(1.0f, 1.0f, 1.0f);
+    glPushMatrix(); glTranslatef(0.0f, 1.45f, 0.0f); glScalef(2.0f, 0.1f, 0.06f); solidCube(1.0f); glPopMatrix();
+    glPushMatrix(); glTranslatef(0.0f, -1.45f, 0.0f); glScalef(2.0f, 0.1f, 0.06f); solidCube(1.0f); glPopMatrix();
+    glPushMatrix(); glTranslatef(-0.95f, 0.0f, 0.0f); glScalef(0.1f, 3.0f, 0.06f); solidCube(1.0f); glPopMatrix();
+    glPushMatrix(); glTranslatef(0.95f, 0.0f, 0.0f); glScalef(0.1f, 3.0f, 0.06f); solidCube(1.0f); glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+    glPopMatrix();
+
+    glDepthMask(GL_TRUE);
+    glDisable(GL_BLEND);
+
+
+    glEnable(GL_TEXTURE_2D); glBindTexture(GL_TEXTURE_2D, woodTex); glColor3f(1.0f, 1.0f, 1.0f);
+    glPushMatrix(); glTranslatef(0.0f, 5.35f, -7.7f); glScalef(5.0f, 0.08f, 0.08f); solidCube(1.0f); glPopMatrix();
+    glPushMatrix(); glTranslatef(-2.5f, 5.35f, -7.8f); glScalef(0.12f, 0.15f, 0.2f); solidCube(1.0f); glPopMatrix();
+    glPushMatrix(); glTranslatef(2.5f, 5.35f, -7.8f); glScalef(0.12f, 0.15f, 0.2f); solidCube(1.0f); glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, curtainTex);
+    glColor3f(1.0f, 1.0f, 1.0f);
+
+    float currentScale = 1.0f - (curtainOffset * 0.75f);
+
+
+    glPushMatrix();
+    glTranslatef(-2.2f, 3.6f, -7.75f);
+    glScalef(currentScale, 1.0f, 1.0f);
+    glTranslatef(1.1f, 0.0f, 0.0f);
+    glScalef(2.2f, 3.4f, 0.05f);
+    solidCube(1.0f);
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glTranslatef(2.2f, 3.6f, -7.75f);
+    glScalef(currentScale, 1.0f, 1.0f);
+    glTranslatef(-1.1f, 0.0f, 0.0f);
+    glScalef(2.2f, 3.4f, 0.05f);
+    solidCube(1.0f);
+    glPopMatrix();
+
+    glDisable(GL_TEXTURE_2D);
+}
+
 void drawAllFurniture() {
     glPushMatrix(); glTranslatef(6.5f, 0.0f, 0.0f); glRotatef(-90.0f, 0.0f, 1.0f, 0.0f); drawTable(); drawDesktopSetup(); glPopMatrix();
     glPushMatrix(); glTranslatef(4.5f, 0.0f, 0.0f); glRotatef(90.0f, 0.0f, 1.0f, 0.0f); drawChair(); glPopMatrix();
@@ -349,6 +353,7 @@ void drawAllFurniture() {
     drawExtraDetails();
 
 
+    drawWindowAndCurtains();
     drawAC();
     drawOutdoorAC();
 }
