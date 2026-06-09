@@ -2,8 +2,6 @@
 
 
 extern bool lightOn;
-
-
 void toggleLight()
 {
     lightOn = !lightOn;
