@@ -10,7 +10,8 @@
 float cameraX = 0.0f, cameraY = 4.0f, cameraZ = 15.0f;
 float roomRotX = 0.0f, roomRotY = 0.0f, roomRotZ = 0.0f;
 
-GLuint floorTex, outWallTex, inWallTex, woodTex, windowTex, pcTex, clockTex, doorTex, sofaTex, bedsheetTex, emonTex, ranaTex, rugTex, keyboardTex, mouseTex;
+
+GLuint floorTex, outWallTex, inWallTex, woodTex, windowTex, pcTex, clockTex, doorTex, sofaTex, bedsheetTex, emonTex, ranaTex, rugTex, keyboardTex, mouseTex, curtainTex;
 
 GLuint loadTextureFile(const char* path) {
     GLuint textureID; glGenTextures(1, &textureID); glBindTexture(GL_TEXTURE_2D, textureID);
@@ -40,7 +41,6 @@ void drawCeiling() {
 
 void drawWalls() {
     glEnable(GL_TEXTURE_2D);
-
     glBindTexture(GL_TEXTURE_2D, inWallTex); glColor3f(1.0f, 1.0f, 1.0f);
     glBegin(GL_QUADS);
     glNormal3f(0, 0, 1);
@@ -67,7 +67,6 @@ void drawWalls() {
     glTexCoord2f(1, 1.0f); glVertex3f( 1.5f, 7.0f, 8.0f); glTexCoord2f(0, 1.0f); glVertex3f(-1.5f, 7.0f, 8.0f);
     glEnd();
 
-
     glBindTexture(GL_TEXTURE_2D, outWallTex);
     glBegin(GL_QUADS);
     glNormal3f(0, 0, -1);
@@ -93,7 +92,6 @@ void drawWalls() {
     glTexCoord2f(0, 0.7f); glVertex3f(-1.5f, 5.0f, 8.1f); glTexCoord2f(1, 0.7f); glVertex3f( 1.5f, 5.0f, 8.1f);
     glTexCoord2f(1, 1.0f); glVertex3f( 1.5f, 7.0f, 8.1f); glTexCoord2f(0, 1.0f); glVertex3f(-1.5f, 7.0f, 8.1f);
     glEnd();
-
 
     glBindTexture(GL_TEXTURE_2D, woodTex); glColor3f(1.0f, 1.0f, 1.0f);
     float outZ = 8.12f, inZ = 7.98f, midZOut = 8.1f, midZIn = 8.0f;
@@ -133,23 +131,17 @@ void drawSky() {
     glEnd(); glDisable(GL_TEXTURE_2D); glEnable(GL_LIGHTING);
 }
 
-void drawWindow() {
-    glColor3f(0.45f, 0.22f, 0.05f); glLineWidth(4);
-    glBegin(GL_LINES);
-    glVertex3f(-2.0f, 2.0f, -7.9f); glVertex3f( 2.0f, 2.0f, -7.9f); glVertex3f( 2.0f, 2.0f, -7.9f); glVertex3f( 2.0f, 5.0f, -7.9f);
-    glVertex3f( 2.0f, 5.0f, -7.9f); glVertex3f(-2.0f, 5.0f, -7.9f); glVertex3f(-2.0f, 5.0f, -7.9f); glVertex3f(-2.0f, 2.0f, -7.9f);
-    glVertex3f(0.0f, 2.0f, -7.9f);  glVertex3f(0.0f, 5.0f, -7.9f); glVertex3f(-2.0f, 3.5f, -7.9f); glVertex3f( 2.0f, 3.5f, -7.9f);
-    glEnd();
-}
-
 void drawRoom() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
+
     gluLookAt(cameraX, cameraY, cameraZ, 0.0f, 3.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-    glRotatef(roomRotX, 1.0f, 0.0f, 0.0f); glRotatef(roomRotY, 0.0f, 1.0f, 0.0f); glRotatef(roomRotZ, 0.0f, 0.0f, 1.0f);
+
+    glRotatef(roomRotX, 1.0f, 0.0f, 0.0f);
+    glRotatef(roomRotY, 0.0f, 1.0f, 0.0f);
+    glRotatef(roomRotZ, 0.0f, 0.0f, 1.0f);
 
     glEnable(GL_LIGHTING);
-
 
     if (lightOn) {
         glEnable(GL_LIGHT0);
@@ -158,7 +150,6 @@ void drawRoom() {
     } else {
         glDisable(GL_LIGHT0);
     }
-
 
     if (projLightOn) {
         glEnable(GL_LIGHT1); glEnable(GL_LIGHT2);
@@ -173,7 +164,6 @@ void drawRoom() {
         glDisable(GL_LIGHT1); glDisable(GL_LIGHT2);
     }
 
-    // 3. TABLE LAMP
     if (lampOn) {
         glEnable(GL_LIGHT3);
         GLfloat lamp_pos[] = { -2.5f, 1.4f, -6.5f, 1.0f };
@@ -182,7 +172,7 @@ void drawRoom() {
         glDisable(GL_LIGHT3);
     }
 
-    drawSky(); drawFloor(); drawCeiling(); drawWalls(); drawWindow();
+    drawSky(); drawFloor(); drawCeiling(); drawWalls();
     drawAllFurniture();
 }
 
@@ -196,7 +186,7 @@ void initRoom() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glEnable(GL_DEPTH_TEST);
 
-    floorTex    = loadTextureFile("C:\\Users\\nazru\\OneDrive\\Desktop\\C Program\\Glut Project\\3d room\\floor.png");
+     floorTex    = loadTextureFile("C:\\Users\\nazru\\OneDrive\\Desktop\\C Program\\Glut Project\\3d room\\floor.png");
     inWallTex   = loadTextureFile("C:\\Users\\nazru\\OneDrive\\Desktop\\C Program\\Glut Project\\3d room\\bedroom wall.jpg");
     outWallTex  = loadTextureFile("C:\\Users\\nazru\\OneDrive\\Desktop\\C Program\\Glut Project\\3d room\\out wall.jpg");
     woodTex     = loadTextureFile("C:\\Users\\nazru\\OneDrive\\Desktop\\C Program\\Glut Project\\3d room\\furniture wood.jpg");
@@ -213,13 +203,13 @@ void initRoom() {
 
     keyboardTex = loadTextureFile("C:\\Users\\nazru\\OneDrive\\Desktop\\C Program\\Glut Project\\3d room\\keyboard.png");
     mouseTex    = loadTextureFile("C:\\Users\\nazru\\OneDrive\\Desktop\\C Program\\Glut Project\\3d room\\mouse.png");
+    curtainTex  = loadTextureFile("C:\\Users\\nazru\\OneDrive\\Desktop\\C Program\\Glut Project\\3d room\\curtain.jpg");
+
 
     glEnable(GL_LIGHTING);
 
-
     GLfloat slightly_dark[] = { 0.15f, 0.15f, 0.15f, 1.0f };
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, slightly_dark);
-
 
     GLfloat white_dif[] = { 1.0f, 1.0f, 1.0f, 1.0f };
     GLfloat white_amb[] = { 0.4f, 0.4f, 0.4f, 1.0f };
@@ -227,14 +217,12 @@ void initRoom() {
     glLightfv(GL_LIGHT0, GL_AMBIENT, white_amb);
     glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.005f);
 
-
     GLfloat warm_spot[] = { 1.0f, 0.8f, 0.4f, 1.0f };
     GLfloat zero_amb[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
     glLightfv(GL_LIGHT1, GL_DIFFUSE, warm_spot); glLightfv(GL_LIGHT1, GL_AMBIENT, zero_amb);
     glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 40.0f); glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 15.0f); glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.01f);
     glLightfv(GL_LIGHT2, GL_DIFFUSE, warm_spot); glLightfv(GL_LIGHT2, GL_AMBIENT, zero_amb);
     glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 40.0f); glLightf(GL_LIGHT2, GL_SPOT_EXPONENT, 15.0f); glLightf(GL_LIGHT2, GL_LINEAR_ATTENUATION, 0.01f);
-
 
     GLfloat dim_warm[] = { 0.8f, 0.6f, 0.2f, 1.0f };
     GLfloat lamp_amb[] = { 0.1f, 0.1f, 0.05f, 1.0f };
