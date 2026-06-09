@@ -6,7 +6,6 @@
 float fanAngle = 0;
 float clockAngle = 0;
 float doorAngle = 0.0f;
-
 float acFanAngle = 0.0f;
 float mistOffset = 0.0f;
 float curtainOffset = 1.0f;
