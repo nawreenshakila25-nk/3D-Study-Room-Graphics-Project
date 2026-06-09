@@ -9,7 +9,6 @@ extern float mistOffset;
 extern float curtainOffset;
 extern float windowOffset;
 extern GLuint keyboardTex, mouseTex, curtainTex;
-
 void solidCube(float size) {
     float s = size / 2.0f;
     glBegin(GL_QUADS);
