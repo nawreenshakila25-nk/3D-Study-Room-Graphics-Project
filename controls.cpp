@@ -14,7 +14,6 @@ bool windowOpen = false;
 
 extern float cameraX, cameraY, cameraZ;
 extern float roomRotX, roomRotY, roomRotZ;
-
 void keyboard(unsigned char key, int x, int y)
 {
     switch(key)
