@@ -9,8 +9,6 @@ bool acOn = false;
 bool doorOpen = false;
 bool projLightOn = true;
 bool lampOn = true;
-
-
 bool curtainOpen = true;
 bool windowOpen = false;
 
