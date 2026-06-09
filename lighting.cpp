@@ -5,7 +5,6 @@ extern bool lightOn;
 void toggleLight()
 {
     lightOn = !lightOn;
-
     if(lightOn)
     {
         glEnable(GL_LIGHTING);
